@@ -1,9 +1,12 @@
 import { useEffect, useState } from 'react'
 import SearchBar from '../components/SearchBar'
+import FilterBar from '../components/FilterBar'
 import CountryCard from '../components/CountryCard'
 
 function Home() {
   const [query, setQuery] = useState('')
+  const [region, setRegion] = useState('All')
+  const [sortBy, setSortBy] = useState('')
   const [countries, setCountries] = useState([])
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState(null)
@@ -13,6 +16,8 @@ function Home() {
       setCountries([])
       setError(null)
       setLoading(false)
+      setRegion('All')
+      setSortBy('')
       return undefined
     }
 
@@ -48,20 +53,42 @@ function Home() {
     return () => clearTimeout(timer)
   }, [query])
 
+  const displayed = [...countries]
+    .filter((country) => region === 'All' || country.region === region)
+    .sort((leftCountry, rightCountry) => {
+      if (sortBy === 'name') {
+        return leftCountry.name.common.localeCompare(rightCountry.name.common)
+      }
+
+      if (sortBy === 'population') {
+        return rightCountry.population - leftCountry.population
+      }
+
+      return 0
+    })
+
   return (
     <div className="home">
       <SearchBar query={query} onQueryChange={setQuery} />
+      <FilterBar
+        region={region}
+        onRegionChange={setRegion}
+        sortBy={sortBy}
+        onSortChange={setSortBy}
+      />
 
       {loading ? (
         <p className="home__status">Loading...</p>
       ) : error ? (
         <p className="home__status home__status--error">{error}</p>
-      ) : countries.length > 0 ? (
+      ) : displayed.length > 0 ? (
         <div className="cards-grid">
-          {countries.map((country) => (
+          {displayed.map((country) => (
             <CountryCard key={country.cca3} country={country} />
           ))}
         </div>
+      ) : countries.length > 0 ? (
+        <p className="home__status">No countries match the selected filter.</p>
       ) : query.trim() ? null : (
         <p className="home__placeholder">Start searching to explore countries.</p>
       )}
