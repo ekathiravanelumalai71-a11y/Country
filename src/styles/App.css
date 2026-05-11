@@ -29,3 +29,63 @@
 .home__placeholder { color: #6b7280; margin-top: 12px; }
 .not-found { padding: 24px; }
 .placeholder { padding: 24px; color: #374151; }
+
+.home__status {
+  padding: 0 20px 20px;
+  color: #6b7280;
+}
+
+.home__status--error {
+  color: #b91c1c;
+}
+
+.cards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 20px;
+  padding: 0 20px 24px;
+}
+
+.card {
+  display: block;
+  color: inherit;
+  background: #fff;
+  border-radius: 14px;
+  overflow: hidden;
+  box-shadow: 0 8px 24px rgba(15, 23, 42, 0.08);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 14px 32px rgba(15, 23, 42, 0.14);
+}
+
+.card__flag {
+  display: block;
+  width: 100%;
+  height: 160px;
+  object-fit: cover;
+}
+
+.card__body {
+  padding: 16px;
+}
+
+.card__name {
+  margin: 0 0 12px;
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: #111827;
+}
+
+.card__body p {
+  margin: 0 0 8px;
+  font-size: 0.95rem;
+  color: #4b5563;
+}
+
+.card__body p span {
+  font-weight: 600;
+  color: #374151;
+}
