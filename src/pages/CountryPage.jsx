@@ -1,3 +1,4 @@
+import React from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import useCountry from '../hooks/useCountry'
 import '../styles/App.css'

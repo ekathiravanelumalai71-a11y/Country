@@ -1,3 +1,5 @@
+import React from 'react'
+
 function FilterBar({ region, onRegionChange, sortBy, onSortChange }) {
   return (
     <div className="filter-bar">

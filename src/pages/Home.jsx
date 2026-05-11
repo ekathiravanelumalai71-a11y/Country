@@ -1,3 +1,4 @@
+import React from 'react'
 import { useEffect, useState } from 'react'
 import SearchBar from '../components/SearchBar'
 import FilterBar from '../components/FilterBar'
