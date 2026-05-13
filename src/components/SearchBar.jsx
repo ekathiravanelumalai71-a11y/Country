@@ -1,3 +1,5 @@
+import React from 'react'
+
 function SearchBar({ query, onQueryChange }) {
   return (
     <div className="search-bar">

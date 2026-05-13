@@ -1,4 +1,21 @@
+import React from 'react'
 import { createContext, useContext, useEffect, useReducer } from 'react'
+
+function readStoredFavourites() {
+  try {
+    const storedValue = localStorage.getItem('favourites')
+
+    if (!storedValue) {
+      return []
+    }
+
+    const parsedValue = JSON.parse(storedValue)
+
+    return Array.isArray(parsedValue) ? parsedValue : []
+  } catch {
+    return []
+  }
+}
 
 function favouritesReducer(state, action) {
   switch (action.type) {
@@ -24,11 +41,15 @@ export function FavouritesProvider({ children }) {
   const [favourites, dispatch] = useReducer(
     favouritesReducer,
     [],
-    () => JSON.parse(localStorage.getItem('favourites') || '[]')
+    readStoredFavourites
   )
 
   useEffect(() => {
-    localStorage.setItem('favourites', JSON.stringify(favourites))
+    try {
+      localStorage.setItem('favourites', JSON.stringify(favourites))
+    } catch {
+      // Ignore storage failures so the app can still render.
+    }
   }, [favourites])
 
   return <FavouritesContext.Provider value={{ favourites, dispatch }}>{children}</FavouritesContext.Provider>
